@@ -1,4 +1,6 @@
 import random
+from traits import *
+from names import *
 
 class Character:
     def __init__(self, name, birthdate, traits, role_title, role_rank):
@@ -10,6 +12,7 @@ class Character:
         self.role_title = role_title
         self.role_rank = role_rank
         self.major_events = []
+        self.age = random.randint(13, 50)
         match self.role_rank:
             case 3:
                 self.wealth = random.randint(1,50)
@@ -55,6 +58,57 @@ class Character:
             for event in self.major_events:
                 description += f" - {event}\n"
         return description
+    
+    @staticmethod
+    def generate_random_character():
+        name = random.choice(NAMES)
+        birthdate = random.randint(0, 80)
+    
+        traits = random.sample(list(CHARACTER_TRAITS.keys()), random.randint(1, 3))
+        role_rank = random.randint(0, 3)
+        match role_rank:
+            case 3:
+                role_title = random.choice(ROLE_3_TITLES)
+            case 2:
+                role_title = random.choice(ROLE_2_TITLES)
+            case 1:
+                role_title = random.choice(ROLE_1_TITLES)
+            case 0:
+                role_title = random.choice(ROLE_0_TITLES)
+
+        return Character(
+            name=name,
+            birthdate=birthdate,
+            traits=traits,
+            role_title=role_title,
+            role_rank=role_rank
+        )
+    
+    def ageUp(self):
+        self.age += 1
+        self.apply_trait_effects()
+        self.clamp_stats()
+        
+
+    def apply_trait_effects(self):
+        for trait in self.traits:
+            effects = CHARACTER_TRAITS.get(trait, {})
+            for key, value in effects.items():
+                if hasattr(self, key):
+                    setattr(self, key, getattr(self, key) + value)
+
+
+    def clamp_stats(self):
+        for stat in ["power", "wealth", "prestige", "morality", "stress"]:
+            value = getattr(self, stat)
+            value = max(0, min(100, value))
+            setattr(self, stat, value)
+
+    def die(self, cause):
+        self.deathdate = self.birthdate + self.age
+        self.cause_of_death = cause
+
+
         
 
 

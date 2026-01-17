@@ -62,3 +62,5 @@ CHARACTER_TRAITS = {
         "stress": -1
     },
 }
+
+

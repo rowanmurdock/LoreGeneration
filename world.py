@@ -4,3 +4,8 @@ class World:
         self.year = year
         self.factions = factions
         self.major_events = major_events
+
+    def get_year(self):
+        return self.year
+    
+    
