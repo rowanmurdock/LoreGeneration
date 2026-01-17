@@ -1,6 +1,8 @@
 import random
 from names import *
 from character import Character
+from culture import Culture
+from religion import Religion
 
 class Faction:
     def __init__(self, name, culture, religion, leader, characters):
@@ -18,24 +20,30 @@ class Faction:
 
     def describe(self):
         description = f"Faction Name: {self.name}\n"
-        description += f"Culture: {self.culture}\n"
-        description += f"Religion: {self.religion}\n"
+        description += f"Culture: {self.culture.name}\n"
+        description += f"Traditions: {', '.join(self.culture.traditions)}\n"
+        description += f"Religion: {self.religion.name}\n"
         description += f"Leader: {self.leader.name}\n"
         description += f"Population: {self.population}\n"
         description += f"Resources: {self.resources}\n"
         description += f"War Pressure: {self.war_pressure}\n"
         description += f"Stability: {self.stability}\n"
         description += f"Religious Tension: {self.religious_tension}\n"
+        if self.characters:
+            description += "Notable Characters:\n"
+            for char in self.characters[:10]:
+                description += f" - {char.name}, Role: {char.role_title}\n"
         if self.major_events:
             description += "Major Events:\n"
             for event in self.major_events:
                 description += f" - {event}\n"
         return description
     
-    def generate_random_faction(self):
+    @staticmethod
+    def generate_random_faction():
         name = random.choice(FACTION_NAMES)
-        culture = random.choice(CULTURE_NAMES)
-        religion = random.choice(RELIGION_NAMES)
+        culture = Culture.generate_random_culture()
+        religion = Religion.generate_random_religion()
         characters = []
         for i in range(random.randint(10, 30)):
             characters.append(Character.generate_random_character())

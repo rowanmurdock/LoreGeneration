@@ -1,4 +1,5 @@
 from names import *
+from traits import *
 import random
 
 class Culture:
@@ -6,7 +7,8 @@ class Culture:
         self.name = name
         self.traditions = traditions
 
-    def generate_random_culture(self):
+    @staticmethod
+    def generate_random_culture():
         name = random.choice(CULTURE_NAMES)
-        traditions = random.sample(TRADITIONS, random.randint(1, 5))
+        traditions = random.sample(list(CULTURE_TRAITS.keys()), random.randint(1, 5))
         return Culture(name, traditions)
