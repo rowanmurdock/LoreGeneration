@@ -1,6 +1,7 @@
 import random
 from traits import *
 from names import *
+from event import *
 
 class Character:
     def __init__(self, name, birthdate, traits, role_title, role_rank):
@@ -122,6 +123,25 @@ class Character:
     def die(self, cause):
         self.deathdate = self.birthdate + self.age
         self.cause_of_death = cause
+
+    def checkThresholds(self):
+        if self.stress >= 95:
+            self_event_chance = random.randint(1, 5)
+            match self_event_chance:
+                case 1:
+                    self.die("Heart Attack from Stress")
+                case 2:
+                    self.die("Stroke from Stress")
+                case 3:
+                    self.die("Suicide from Stress")
+                case 4:
+                    self.major_events.append(Event("Suffered Severe Stress but Survived", "Stress", self.birthdate + self.age, self.birthdate + self.age))
+                    self.stress -= 50
+                case 5:
+                    self.major_events.append(Event("Suffered Severe Stress but Survived and Completely Recovered", "Stress", self.birthdate + self.age, self.birthdate + self.age))
+                    self.stress -= 70
+
+        
 
 
         

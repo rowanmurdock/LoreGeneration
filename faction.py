@@ -1,4 +1,5 @@
 import random
+from event import *
 from names import *
 from character import Character
 from culture import Culture
@@ -6,7 +7,7 @@ from religion import Religion
 from traits import *
 
 class Faction:
-    def __init__(self, name, culture, religion, leader, characters):
+    def __init__(self, name, culture, religion, leader, characters, startDate):
         self.name = name
         self.culture = culture
         self.religion = religion
@@ -18,6 +19,8 @@ class Faction:
         self.stability = 100
         self.religious_tension = 0
         self.major_events = []
+        self.startDate = startDate
+        self.age = 0
 
     def describe(self):
         description = f"Faction Name: {self.name}\n"
@@ -57,6 +60,13 @@ class Faction:
             value = getattr(self, stat)
             value = max(0, min(100, value))
             setattr(self, stat, value)
+
+    def advanceYear(self):
+        self.age += 1
+        self.applyCultureAndReligionEffects()
+        self.clampStats()
+        for char in self.characters:
+            char.ageUp()
     
     def getMilitaryStrength(self):
         base_strength = self.population // 1000
@@ -74,7 +84,13 @@ class Faction:
         return base_strength
     
     def factionEnds(self):
-        self.major_events.append(f"The faction of {self.name} has ended.")
+        self.major_events.append(Event(f"The faction of {self.name} has ended.", "Faction End", self.startDate + self.age, self.startDate + self.age))
+
+    def checkThresholds(self):
+        if self.stability <= 0:
+            self.factionEnds()
+        if self.population <= 0:
+            self.factionEnds()
 
     
     @staticmethod

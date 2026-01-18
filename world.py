@@ -3,6 +3,7 @@ from names import *
 from faction import Faction
 from culture import Culture
 from religion import Religion
+from event import *
 
 
 class World:
@@ -40,3 +41,8 @@ class World:
             for event in self.major_events:
                 description += f" - {event}\n"
         return description
+    
+    def advanceYear(self):
+        self.year += 1
+        for faction in self.factions:
+            faction.advanceYear()

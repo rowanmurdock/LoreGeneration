@@ -8,6 +8,13 @@ class Event:
         self.end_year = None
         self.active = True
 
+    def __init__(self, name, event_type, start_year, end_year):
+        self.name = name
+        self.event_type = event_type
+        self.start_year = start_year
+        self.end_year = end_year
+        self.active = True
+
     def progress(self):
         pass
 
