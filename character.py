@@ -21,7 +21,7 @@ class Character:
                 ##1 is very moral or good, 100 is evil or aggressive
                 self.morality = random.randint(1,100)
                 ##1 is very low stress, 100 is very high stress
-                self.stress = random.randint(50,90)
+                self.stress = random.randint(30,90)
             case 2:
                 self.wealth = random.randint(1,30)
                 self.power = random.randint(1,30)
@@ -60,15 +60,13 @@ class Character:
         return description
     
     @staticmethod
-    def generate_random_character():
+    def generateRandomCharacter():
         name = random.choice(NAMES)
         birthdate = random.randint(0, 80)
     
         traits = random.sample(list(CHARACTER_TRAITS.keys()), random.randint(1, 3))
-        role_rank = random.randint(0, 3)
+        role_rank = random.randint(0, 2)
         match role_rank:
-            case 3:
-                role_title = random.choice(ROLE_3_TITLES)
             case 2:
                 role_title = random.choice(ROLE_2_TITLES)
             case 1:
@@ -84,13 +82,30 @@ class Character:
             role_rank=role_rank
         )
     
+    @staticmethod
+    def generateRandomLeader():
+        name = random.choice(NAMES)
+        birthdate = random.randint(0, 80)
+    
+        traits = random.sample(list(CHARACTER_TRAITS.keys()), random.randint(1, 3))
+        role_rank = 3
+        role_title = random.choice(ROLE_3_TITLES)
+
+        return Character(
+            name=name,
+            birthdate=birthdate,
+            traits=traits,
+            role_title=role_title,
+            role_rank=role_rank
+        )
+    
     def ageUp(self):
         self.age += 1
         self.apply_trait_effects()
         self.clamp_stats()
         
 
-    def apply_trait_effects(self):
+    def applyTraitEffects(self):
         for trait in self.traits:
             effects = CHARACTER_TRAITS.get(trait, {})
             for key, value in effects.items():
@@ -98,7 +113,7 @@ class Character:
                     setattr(self, key, getattr(self, key) + value)
 
 
-    def clamp_stats(self):
+    def clampStats(self):
         for stat in ["power", "wealth", "prestige", "morality", "stress"]:
             value = getattr(self, stat)
             value = max(0, min(100, value))

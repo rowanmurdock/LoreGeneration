@@ -1,5 +1,6 @@
 from faction import Faction
+from world import World
 
 if __name__ == "__main__":
-    test_faction = Faction.generate_random_faction()
-    print(test_faction.describe())
+    test_world = World.generateRandomWorld()
+    print(test_world.describe())

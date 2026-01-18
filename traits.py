@@ -20,7 +20,7 @@ CHARACTER_TRAITS = {
         "morality": -3,
         "prestige": +3
     },
-    "weak_willed": {
+    "weak willed": {
         "power": -2,
         "stress": +1
     },
@@ -60,6 +60,14 @@ CHARACTER_TRAITS = {
     "calculating": {
         "power": +1,
         "stress": -1
+    },
+    "evil": {
+        "morality": +10,
+        "prestige": -3
+    },
+    "military genius": {
+        "prestige": +3,
+        "power": +5
     },
 }
 

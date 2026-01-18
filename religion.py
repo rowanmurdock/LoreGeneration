@@ -9,8 +9,8 @@ class Religion:
         self.traditions = traditions
 
     @staticmethod
-    def generate_random_religion():
+    def generateRandomReligion():
         name = random.choice(RELIGION_NAMES)
         deities = random.sample(GOD_NAMES, random.randint(1, 3))
-        traditions = random.sample(list(RELIGIOUS_TRADITIONS.keys()), random.randint(1, 5))
+        traditions = random.sample(list(RELIGIOUS_TRADITIONS.keys()), random.randint(1, 3))
         return Religion(name, deities, traditions)

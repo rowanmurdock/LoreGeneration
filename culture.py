@@ -8,7 +8,7 @@ class Culture:
         self.traditions = traditions
 
     @staticmethod
-    def generate_random_culture():
+    def generateRandomCulture():
         name = random.choice(CULTURE_NAMES)
         traditions = random.sample(list(CULTURE_TRAITS.keys()), random.randint(1, 5))
         return Culture(name, traditions)
