@@ -14,6 +14,7 @@ class Character:
         self.role_rank = role_rank
         self.major_events = []
         self.age = random.randint(13, 50)
+        self.alive = True
         match self.role_rank:
             case 3:
                 self.wealth = random.randint(1,50)
@@ -102,8 +103,9 @@ class Character:
     
     def ageUp(self):
         self.age += 1
-        self.apply_trait_effects()
-        self.clamp_stats()
+        self.applyTraitEffects()
+        self.clampStats()
+        self.checkThresholds()
         
 
     def applyTraitEffects(self):
@@ -123,24 +125,37 @@ class Character:
     def die(self, cause):
         self.deathdate = self.birthdate + self.age
         self.cause_of_death = cause
+        print(f"{self.name} has died of {cause} at age {self.age}.")
+        self.alive = False
 
     def checkThresholds(self):
+        if self.age >= 70:
+            death_chance = random.randint(1, 100)
+            if death_chance <= (self.age - 60) * 3:
+                self.die("Old Age")
         if self.stress >= 95:
-            self_event_chance = random.randint(1, 5)
-            match self_event_chance:
+            stress_chance = random.randint(1, 4)
+            match stress_chance:
                 case 1:
                     self.die("Heart Attack from Stress")
                 case 2:
                     self.die("Stroke from Stress")
                 case 3:
-                    self.die("Suicide from Stress")
-                case 4:
                     self.major_events.append(Event("Suffered Severe Stress but Survived", "Stress", self.birthdate + self.age, self.birthdate + self.age))
                     self.stress -= 50
-                case 5:
+                case 4:
                     self.major_events.append(Event("Suffered Severe Stress but Survived and Completely Recovered", "Stress", self.birthdate + self.age, self.birthdate + self.age))
                     self.stress -= 70
-
+        if self.role_rank < 2 and self.prestige >= 30:
+            promotion_chance = random.randint(1, 100)
+            if promotion_chance <= 50:
+                self.role_rank += 1
+                match self.role_rank:
+                    case 1:
+                        self.role_title = random.choice(ROLE_2_TITLES)
+                    case 2:
+                        self.role_title = random.choice(ROLE_3_TITLES)
+                self.major_events.append(Event(f"Promoted to {self.role_title}", "Promotion", self.birthdate + self.age, self.birthdate + self.age))
         
 
 

@@ -12,13 +12,19 @@ class World:
         self.year = year
         self.factions = factions
         self.major_events = major_events
+        self.history = []
 
     def getYear(self):
         return self.year
     
     def factionEnds(self, faction):
-        self.major_events.append(f"The faction of {faction.name} has ended.")
+        faction.factionEnds()
+        self.major_events.append(Event(f"The faction of {faction.name} has ended in the world of {self.name}.", "Faction End", self.year, self.year))
         self.factions.remove(faction)
+
+    
+    def addHistoricalEvent(self, desc):
+        self.history.append(desc)
 
     @staticmethod
     def generateRandomWorld():

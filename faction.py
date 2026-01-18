@@ -13,6 +13,7 @@ class Faction:
         self.religion = religion
         self.leader = leader
         self.characters = characters
+        self.graveyard = []
         self.population = len(characters) * 100 * random.randint(1,10)
         self.resources = 50
         self.war_pressure = 0
@@ -65,8 +66,12 @@ class Faction:
         self.age += 1
         self.applyCultureAndReligionEffects()
         self.clampStats()
+        self.checkThresholds()
         for char in self.characters:
             char.ageUp()
+            if not char.alive:
+                self.graveyard.append(char)
+                self.characters.remove(char)
     
     def getMilitaryStrength(self):
         base_strength = self.population // 1000
@@ -113,7 +118,7 @@ class Faction:
         for i in range(random.randint(10, 30)):
             characters.append(Character.generateRandomCharacter())
         leader = Character.generateRandomLeader()
-        return Faction(name, culture, religion, leader, characters)
+        return Faction(name, culture, religion, leader, characters, 100)
     
 
     
