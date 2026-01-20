@@ -29,7 +29,7 @@ class Faction:
         description += f"Traditions: {', '.join(self.culture.traditions)}\n"
         description += f"Religion: {self.religion.name}\n"
         description += f"Beliefs: {', '.join(self.religion.traditions)}\n"
-        description += f"Leader: {self.leader.name}, Title: {self.leader.role_title}, Traits: {', '.join(self.leader.traits)}\n"
+        description += f"Leader: {self.leader.fname} {self.leader.lname}, Title: {self.leader.role_title}, Traits: {', '.join(self.leader.traits)}\n"
         description += f"Population: {self.population}\n"
         description += f"Resources: {self.resources}\n"
         description += f"War Pressure: {self.war_pressure}\n"
@@ -39,7 +39,7 @@ class Faction:
         if self.characters:
             description += "Notable Characters:\n"
             for char in self.characters[:10]:
-                description += f" - {char.name}, Role: {char.role_title}, Traits: {', '.join(char.traits)}\n"
+                description += f" - {char.fname} {char.lname}, Role: {char.role_title}, Traits: {', '.join(char.traits)}\n"
         if self.major_events:
             description += "Major Events:\n"
             for event in self.major_events:
@@ -62,13 +62,13 @@ class Faction:
             value = max(0, min(100, value))
             setattr(self, stat, value)
 
-    def advanceYear(self):
+    def advanceYear(self, world):
         self.age += 1
         self.applyCultureAndReligionEffects()
         self.clampStats()
         self.checkThresholds()
         for char in self.characters:
-            char.ageUp()
+            char.ageUp(world)
             if not char.alive:
                 self.graveyard.append(char)
                 self.characters.remove(char)
@@ -98,28 +98,7 @@ class Faction:
             self.factionEnds()
 
     
-    @staticmethod
-    def generateRandomFaction():
-        name = random.choice(FACTION_NAMES)
-        culture = Culture.generateRandomCulture()
-        religion = Religion.generateRandomReligion()
-        characters = []
-        for i in range(random.randint(10, 30)):
-            characters.append(Character.generateRandomCharacter())
-        leader = Character.generateRandomLeader()
-        return Faction(name, culture, religion, leader, characters)
-    
-    @staticmethod
-    def generateRandomFactionForWorld(culture, religion):
-        name = random.choice(FACTION_NAMES)
-        culture = culture
-        religion = religion
-        characters = []
-        for i in range(random.randint(10, 30)):
-            characters.append(Character.generateRandomCharacter())
-        leader = Character.generateRandomLeader()
-        return Faction(name, culture, religion, leader, characters, 100)
-    
+
 
     
         

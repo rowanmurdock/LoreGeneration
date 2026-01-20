@@ -4,8 +4,9 @@ from names import *
 from event import *
 
 class Character:
-    def __init__(self, name, birthdate, traits, role_title, role_rank):
-        self.name = name
+    def __init__(self, fname, lname, birthdate, traits, role_title, role_rank, age):
+        self.fname = fname
+        self.lname = lname
         self.birthdate = birthdate
         self.deathdate = None
         self.traits = traits
@@ -13,7 +14,7 @@ class Character:
         self.role_title = role_title
         self.role_rank = role_rank
         self.major_events = []
-        self.age = random.randint(13, 50)
+        self.age = age
         self.alive = True
         match self.role_rank:
             case 3:
@@ -44,7 +45,7 @@ class Character:
                 self.stress = random.randint(1,30)
 
     def describe(self):
-        description = f"Name: {self.name}\n"
+        description = f"Name: {self.fname} {self.lname}\n"
         description += f"Birthdate: {self.birthdate}\n"
         description += f"Deathdate: {self.deathdate}\n"
         description += f"Role: {self.role_title} (Rank {self.role_rank})\n"
@@ -62,9 +63,11 @@ class Character:
         return description
     
     @staticmethod
-    def generateRandomCharacter():
-        name = random.choice(NAMES)
-        birthdate = random.randint(0, 80)
+    def generateRandomCharacter(current_year):
+        fname = random.choice(NAMES)
+        lname = random.choice(SURNAMES)
+        birthdate = random.randint(20, 80)
+        age = birthdate - current_year
     
         traits = random.sample(list(CHARACTER_TRAITS.keys()), random.randint(1, 3))
         role_rank = random.randint(0, 2)
@@ -77,35 +80,45 @@ class Character:
                 role_title = random.choice(ROLE_0_TITLES)
 
         return Character(
-            name=name,
+            fname=fname,
+            lname=lname,
             birthdate=birthdate,
             traits=traits,
             role_title=role_title,
-            role_rank=role_rank
+            role_rank=role_rank,
+            age = age,
         )
     
+
+    
     @staticmethod
-    def generateRandomLeader():
-        name = random.choice(NAMES)
-        birthdate = random.randint(0, 80)
+    def generateRandomLeader(current_year):
+        fname = random.choice(NAMES)
+        lname = random.choice(SURNAMES)
+
+        birthdate = random.randint(20, 80)
+        age = birthdate - current_year 
+
     
         traits = random.sample(list(CHARACTER_TRAITS.keys()), random.randint(1, 3))
         role_rank = 3
         role_title = random.choice(ROLE_3_TITLES)
 
         return Character(
-            name=name,
+            fname=fname,
+            lname=lname,
             birthdate=birthdate,
             traits=traits,
             role_title=role_title,
-            role_rank=role_rank
+            role_rank=role_rank,
+            age = age,
         )
     
-    def ageUp(self):
+    def ageUp(self, world):
         self.age += 1
         self.applyTraitEffects()
         self.clampStats()
-        self.checkThresholds()
+        self.checkThresholds(world)
         
 
     def applyTraitEffects(self):
@@ -125,37 +138,42 @@ class Character:
     def die(self, cause):
         self.deathdate = self.birthdate + self.age
         self.cause_of_death = cause
-        print(f"{self.name} has died of {cause} at age {self.age}.")
         self.alive = False
 
-    def checkThresholds(self):
+    def checkThresholds(self, world):
         if self.age >= 70:
             death_chance = random.randint(1, 100)
-            if death_chance <= (self.age - 60) * 3:
+            if death_chance <= (self.age - 70) * 3:
                 self.die("Old Age")
+                world.addHistoricalEvent(f"{self.fname} {self.lname} has died of old age at {self.age}.")
         if self.stress >= 95:
             stress_chance = random.randint(1, 4)
             match stress_chance:
                 case 1:
                     self.die("Heart Attack from Stress")
+                    world.addHistoricalEvent(f"{self.fname} {self.lname} died of a heart attack caused by extreme stress at age {self.age}.")
                 case 2:
                     self.die("Stroke from Stress")
+                    world.addHistoricalEvent(f"{self.fname} {self.lname} died of a stroke caused by extreme stress at age {self.age}.")
                 case 3:
                     self.major_events.append(Event("Suffered Severe Stress but Survived", "Stress", self.birthdate + self.age, self.birthdate + self.age))
                     self.stress -= 50
+                    world.addHistoricalEvent(f"{self.fname} {self.lname} suffered severe stress but survived.")
                 case 4:
                     self.major_events.append(Event("Suffered Severe Stress but Survived and Completely Recovered", "Stress", self.birthdate + self.age, self.birthdate + self.age))
                     self.stress -= 70
+                    world.addHistoricalEvent(f"{self.fname} {self.lname} suffered severe stress but survived and completely recovered.")
         if self.role_rank < 2 and self.prestige >= 30:
             promotion_chance = random.randint(1, 100)
             if promotion_chance <= 50:
                 self.role_rank += 1
                 match self.role_rank:
                     case 1:
-                        self.role_title = random.choice(ROLE_2_TITLES)
+                        self.role_title = random.choice(ROLE_1_TITLES)
                     case 2:
-                        self.role_title = random.choice(ROLE_3_TITLES)
+                        self.role_title = random.choice(ROLE_2_TITLES)
                 self.major_events.append(Event(f"Promoted to {self.role_title}", "Promotion", self.birthdate + self.age, self.birthdate + self.age))
+                world.addHistoricalEvent(f"{self.fname} {self.lname} has been promoted to {self.role_title} at age {self.age}.")
         
 
 

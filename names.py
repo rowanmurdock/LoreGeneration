@@ -21,6 +21,48 @@ NAMES = [
     "Imperion", "Chronos", "Mythras", "Aethern", "Luxar"
 ]
 
+SURNAMES = [
+    "Ashborne", "Blackmere", "Stoneward", "Ravenholt", "Ironfall",
+    "Duskryn", "Thornvale", "Emberlain", "Grimwatch", "Frostmere",
+    "Highcrag", "Stormreach", "Nightbloom", "Oakenshield", "Redwynd",
+    "Crowhaven", "Goldvein", "Shadowmere", "Brightwater", "Deepmoor",
+    "Wolfcrest", "Starfall", "Bloodthorn", "Moonreach", "Ashenford",
+    "Ironroot", "Silverfen", "Darkwillow", "Flameward", "Hollowspire",
+    "Gravewyn", "Windrider", "Stonehollow", "Dawnforge", "Blackfen",
+    "Mistvale", "Rookspire", "Thundershade", "Coldharrow", "Firevein",
+    "Nightforge", "Greenbarrow", "Skylance", "Grimholt", "Fallowmere",
+    "Stormhollow", "Duskwatch", "Ironspire", "Ravenmere", "Brightforge",
+    "Ashwatch", "Frostveil", "Deepreach", "Shadowfen", "Wolfhollow",
+    "Moonspire", "Bloodmere", "Starwyn", "Emberfall", "Stoneveil",
+    "Darkreach", "Goldharrow", "Windmere", "Grimvale", "Highfen",
+    "Nightward", "Oakenspire", "Redharrow", "Coldwatch", "Ironmere",
+    "Mistforge", "Blackreach", "Stormvale", "Hollowfen", "Dawnmere",
+    "Firewatch", "Gravehollow", "Silverreach", "Thornspire", "Ashfen",
+    "Frostward", "Deepforge", "Shadowhollow", "Wolfmere", "Brightfen",
+    "Moonharrow", "Bloodspire", "Starforge", "Embermere", "Stonewatch",
+    "Darkfen", "Goldspire", "Windforge", "Grimreach", "Highmere",
+    "Nightfen", "Oakharrow", "Redspire", "Coldforge", "Ironwatch",
+    "Mistvale", "Blackspire", "Stormmere", "Hollowwatch", "Dawnspire",
+    "Firemere", "Gravefen", "Silverwatch", "Thornmere", "Ashspire",
+    "Frostforge", "Deepwatch", "Shadowmere", "Wolfspire", "Brightwatch",
+    "Moonfen", "Bloodforge", "Starwatch", "Emberfen", "Stoneharrow",
+    "Darkspire", "Goldwatch", "Windfen", "Grimforge", "Highwatch",
+    "Nightspire", "Oakmere", "Redwatch", "Coldspire", "Ironfen",
+    "Mistwatch", "Blackmere", "Stormspire", "Hollowmere", "Dawnwatch", "Snowmere", "Frostward", "Icewatch", "Coldmoor", "Wintermark",
+    "Whitefrost", "Northwatch", "Greywinter", "Icefall", "Frosthold",
+    "Snowspire", "Coldreach", "Winterhall", "Iceward", "Northmere",
+    "Greenwater", "Riverwatch", "Goldfield", "Brightwater", "Sunmere",
+    "Harvesthall", "Greenwatch", "Amberford", "Clearbrook", "Brightfield",
+    "Sunfall", "Riverhold", "Goldenmere", "Springwatch", "Fairwater",
+    "Ironblade", "Steelmark", "Warcrest", "Shieldhall", "Swordmere",
+    "Battleford", "Redbanner", "Ironwall", "Warwatch", "Steelreach",
+    "Shieldspire", "Bladefall", "Bannerhold", "Ironcairn", "Warhelm",
+    "Nightfall", "Dreadhold", "Blackveil", "Ashenhall", "Grimreach",
+    "Bloodveil", "Shadowhold", "Obsidianmere", "Cinderwatch", "Darkreach",
+    "Ebonhall", "Ashwatch", "Graveward", "Voidmere", "Blackcairn"
+]
+
+
 ROLE_3_TITLES = [ "King", "Queen", "Emperor", "Prince", "Princess" ]
 ROLE_2_TITLES = [ "Duke", "Duchess", "Count", "Countess", "General", "Commander" ]
 ROLE_1_TITLES = [ "Baron", "Baroness", "Knight", "Lady", "Lord", "Captain", "Merchant" ]
